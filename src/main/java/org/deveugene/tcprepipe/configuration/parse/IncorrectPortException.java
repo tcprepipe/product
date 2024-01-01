@@ -1,4 +1,4 @@
-package org.deveugene.tcprepipe.configuration.validation;
+package org.deveugene.tcprepipe.configuration.parse;
 
 import lombok.Getter;
 

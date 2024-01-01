@@ -1,6 +1,5 @@
 package org.deveugene.tcprepipe.configuration.parse;
 
-import org.deveugene.tcprepipe.configuration.validation.IncorrectPortException;
 import org.deveugene.tcprepipe.core.network.Port;
 
 import java.util.Arrays;
