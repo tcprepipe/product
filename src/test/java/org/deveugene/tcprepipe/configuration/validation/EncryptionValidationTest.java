@@ -48,4 +48,21 @@ public class EncryptionValidationTest {
         assertTrue(validationFail5.validateActive());
         assertFalse(validationFail5.validateAlgorithm());
     }
+
+    @Test
+    void validateShouldNotThrowException() {
+        validationSuccessful1.validateThrow();
+        validationSuccessful2.validateThrow();
+        validationSuccessful3.validateThrow();
+        validationSuccessful4.validateThrow();
+    }
+
+    @Test
+    void validateShouldThrowException() {
+        assertThrows(ConfigValidationException.class, validationFail1::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail2::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail3::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail4::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail5::validateThrow);
+    }
 }

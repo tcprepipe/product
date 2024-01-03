@@ -12,7 +12,7 @@ public abstract class Validation {
 
     public void validateThrow() {
         if (!validate()) {
-            throw new InvalidValidationException(this);
+            throw new ConfigValidationException(this);
         }
     }
 }

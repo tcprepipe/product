@@ -48,4 +48,21 @@ public class MainValidationTest {
         assertFalse(validationFail7.validatePort());
         assertTrue(validationFail7.validateMode());
     }
+
+    @Test
+    void validateShouldNotThrowException() {
+        validationSuccessful1.validateThrow();
+        validationSuccessful2.validateThrow();
+    }
+
+    @Test
+    void validateShouldThrowException() {
+        assertThrows(ConfigValidationException.class, validationFail1::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail2::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail3::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail4::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail5::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail6::validateThrow);
+        assertThrows(ConfigValidationException.class, validationFail7::validateThrow);
+    }
 }
