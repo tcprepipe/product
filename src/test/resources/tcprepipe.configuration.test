@@ -1,0 +1,8 @@
+tcprepipe.encryption.algorithm=RSA
+tcprepipe.main.proxy.clients.ports=1924,1925,1926
+tcprepipe.main.port=35055
+tcprepipe.perfomance.working.threads=5
+tcprepipe.performance.max.connections=100
+tcprepipe.performance.traffic.capacity=167772160
+tcprepipe.encryption.use=false
+tcprepipe.main.working.mode=SERVER
