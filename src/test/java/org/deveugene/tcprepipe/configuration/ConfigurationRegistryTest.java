@@ -1,5 +1,7 @@
 package org.deveugene.tcprepipe.configuration;
 
+import org.deveugene.tcprepipe.configuration.loader.SimpleLoader;
+import org.deveugene.tcprepipe.configuration.loader.StringConfig;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ConfigurationLoaderTest {
+public class ConfigurationRegistryTest {
     private static String envWithPath, envWithStringAll, envWithString;
 
     private final String
@@ -29,7 +31,7 @@ public class ConfigurationLoaderTest {
 
     @BeforeAll
     static void init() throws IOException {
-        InputStream stream = ConfigurationLoaderTest.class
+        InputStream stream = ConfigurationRegistryTest.class
                 .getClassLoader()
                 .getResourceAsStream("tcprepipe.configuration.test");
         envWithStringAll = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
@@ -54,20 +56,26 @@ public class ConfigurationLoaderTest {
 
     @Test
     void virtualEnvFromFilePathShouldConfiguredCorrectly() {
-        ConfigurationLoader loader = new ConfigurationLoader(envWithPath);
-        assertTrue(checkConfigurationProps(loader));
+        StringConfig config = new StringConfig(envWithPath);
+        SimpleLoader loader = new SimpleLoader(config);
+        ConfigurationRegistry registry = new ConfigurationRegistry(loader);
+        assertTrue(checkConfigurationProps(registry));
     }
 
     @Test
     void virtualEnvWithFullConfigurationShouldCorrect() {
-        ConfigurationLoader loader = new ConfigurationLoader(envWithStringAll);
-        assertTrue(checkConfigurationProps(loader));
+        StringConfig config = new StringConfig(envWithStringAll);
+        SimpleLoader loader = new SimpleLoader(config);
+        ConfigurationRegistry registry = new ConfigurationRegistry(loader);
+        assertTrue(checkConfigurationProps(registry));
     }
 
     @Test
     void virtualEnvNotContainFullConfigurationShouldCorrect() {
-        ConfigurationLoader loader = new ConfigurationLoader(envWithString);
-        assertTrue(checkConfigurationProps(loader));
+        StringConfig config = new StringConfig(envWithString);
+        SimpleLoader loader = new SimpleLoader(config);
+        ConfigurationRegistry registry = new ConfigurationRegistry(loader);
+        assertTrue(checkConfigurationProps(registry));
     }
 
     private boolean checkConfigurationProps(ConfigurationProperties properties) {

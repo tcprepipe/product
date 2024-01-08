@@ -1,20 +1,15 @@
 package org.deveugene.tcprepipe.configuration;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.deveugene.tcprepipe.configuration.loader.Loader;
+
 import java.util.Properties;
 
-public class ConfigurationLoader implements ConfigurationProperties {
-    public final String config;
+public class ConfigurationRegistry implements ConfigurationProperties {
+    private final Loader loader;
     private Properties properties;
 
-    public ConfigurationLoader(String config) {
-        this.config = config;
+    public ConfigurationRegistry(Loader loader) {
+        this.loader = loader;
     }
 
     @Override
@@ -66,20 +61,6 @@ public class ConfigurationLoader implements ConfigurationProperties {
     }
 
     private void loadResources() {
-        String settings = this.config;
-        try {
-            try {
-                Path settingsPath = Paths.get(settings);
-                if (settingsPath.isAbsolute() && Files.isRegularFile(settingsPath)) {
-                    settings = Files.readString(settingsPath, StandardCharsets.UTF_8);
-                }
-            } catch (InvalidPathException ignored) {}
-
-            StringReader reader = new StringReader(settings);
-            this.properties = new Properties();
-            this.properties.load(reader);
-        } catch (IOException e) {
-            throw new RuntimeException("File not found.", e);
-        }
+        this.loader.loadResources(this.properties = new Properties());
     }
 }
