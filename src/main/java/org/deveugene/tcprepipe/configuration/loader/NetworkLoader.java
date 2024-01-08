@@ -3,6 +3,8 @@ package org.deveugene.tcprepipe.configuration.loader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -26,6 +28,11 @@ public class NetworkLoader extends Loader {
 
     @Override
     public boolean isReady() {
-        return getLoadingData().isPath();
+        try {
+            new URL(getLoadingData().getValue());
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 }
